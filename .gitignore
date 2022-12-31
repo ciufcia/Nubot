@@ -6,6 +6,4 @@ __pycache__/
 
 .env
 
-data/*
-!data/
-!data/.gitkeep
+*.db
