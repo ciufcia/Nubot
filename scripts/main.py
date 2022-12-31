@@ -1,8 +1,16 @@
 import os
 import dotenv
 
-from scripts import nubot
+import sys
 
+def __append_project_root_to_path() -> None:
+    root_absolute_path: str = os.path.abspath(__file__ + "\\..")
+    root_path_name: str = os.path.dirname(root_absolute_path)
+    sys.path.append(root_path_name)
+    
+__append_project_root_to_path()
+
+from scripts import nubot
 
 def __set_cwd_to_project_root() -> None:
     """
