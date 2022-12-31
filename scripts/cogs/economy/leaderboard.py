@@ -18,7 +18,7 @@ async def get_leaderboard_section(
         place: int,
         leaderboard_length: int
 ) -> discord.Embed:
-    async with aiosqlite.connect("data\\database.db") as db:
+    async with aiosqlite.connect("data/database.db") as db:
         db.row_factory = aiosqlite.Row
         await db.execute(f"CREATE TABLE IF NOT EXISTS economy_{interaction.guild.id} (id, balance, UNIQUE(id))")
         cursor: aiosqlite.Cursor = await db.execute(

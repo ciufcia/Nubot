@@ -18,7 +18,7 @@ class Events(commands.Cog):
         if message.channel.type == discord.ChannelType.private:
             return
 
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             db.row_factory = aiosqlite.Row
 
             await db.execute(f"CREATE TABLE IF NOT EXISTS mocking_{message.guild.id} (id)")

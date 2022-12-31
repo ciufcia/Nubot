@@ -4,7 +4,7 @@ import dotenv
 import sys
 
 def __append_project_root_to_path() -> None:
-    root_absolute_path: str = os.path.abspath(__file__ + "\\..")
+    root_absolute_path: str = os.path.abspath(__file__ + "/..")
     root_path_name: str = os.path.dirname(root_absolute_path)
     sys.path.append(root_path_name)
     
@@ -16,7 +16,7 @@ def __set_cwd_to_project_root() -> None:
     """
     assumes that root is one directory above
     """
-    root_absolute_path: str = os.path.abspath(__file__ + "\\..")
+    root_absolute_path: str = os.path.abspath(__file__ + "/..")
     root_path_name: str = os.path.dirname(root_absolute_path)
     os.chdir(root_path_name)
 

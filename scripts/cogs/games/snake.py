@@ -22,7 +22,7 @@ class SnakeGame:
 
     @classmethod
     async def create(cls) -> None:
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             await db.execute(
                 """
                 CREATE TABLE IF NOT EXISTS snake (id, board, body, score, direction, is_lost, UNIQUE(id))
@@ -61,7 +61,7 @@ class SnakeGame:
 
     @classmethod
     async def move(cls) -> None:
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             db.row_factory = aiosqlite.Row
 
             cursor: aiosqlite.Cursor = await db.execute("SELECT * FROM snake WHERE id = 0")
@@ -150,7 +150,7 @@ class SnakeGame:
 
     @classmethod
     async def embed_representation(cls, last_update_time: datetime.datetime) -> discord.Embed:
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             db.row_factory = aiosqlite.Row
 
             cursor: aiosqlite.Cursor = await db.execute("SELECT * FROM snake WHERE id = 0")
@@ -310,7 +310,7 @@ class InGameView(discord.ui.View):
 
     @classmethod
     async def check_if_already_voted(cls, interaction: discord.Interaction) -> bool:
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             cursor: aiosqlite.Cursor = await db.execute(f"SELECT * FROM snake_votes WHERE id = {interaction.user.id}")
             data = await cursor.fetchone()
             if data is None:
@@ -340,7 +340,7 @@ class Snake(commands.Cog):
     @app_commands.command(name="snake")
     async def snake(self, interaction: discord.Interaction) -> None:
 
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             db.row_factory = aiosqlite.Row
 
             cursor: aiosqlite.Cursor = await db.execute("SELECT * FROM snake WHERE id = 0")
@@ -388,7 +388,7 @@ class Snake(commands.Cog):
 
 
 async def setup(bot: nubot.Nubot) -> None:
-    async with aiosqlite.connect("data\\database.db") as db:
+    async with aiosqlite.connect("data/database.db") as db:
         try:
             await db.execute("SELECT * FROM snake")
             await db.execute("SELECT * FROM snake_votes")

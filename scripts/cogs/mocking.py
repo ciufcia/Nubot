@@ -49,7 +49,7 @@ class Mocking(commands.Cog):
 
         is_already_mocked: bool = False
 
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             db.row_factory = aiosqlite.Row
             await db.execute(f"CREATE TABLE IF NOT EXISTS mocking_{interaction.guild.id} (id)")
             cursor: aiosqlite.Cursor = await db.execute(
@@ -88,7 +88,7 @@ class Mocking(commands.Cog):
 
         is_already_mocked: bool = True
 
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             db.row_factory = aiosqlite.Row
             await db.execute(f"CREATE TABLE IF NOT EXISTS mocking_{interaction.guild.id} (id)")
             cursor: aiosqlite.Cursor = await db.execute(
