@@ -52,6 +52,10 @@ class MinesweeperGame:
 
     def update(self, coordinates: typing.List[int]) -> int:
         index: int = coordinates[0] + coordinates[1] * self.width
+
+        if self.states[index] not in (0, 2):
+            return 0
+
         self.states[index] = 1
         self.revealed_cells += 1
 
@@ -70,7 +74,7 @@ class MinesweeperGame:
         neighbors: typing.List[typing.List[int]] = self.get_neighbors(coordinates)
         for neighbor in neighbors:
             index: int = neighbor[0] + neighbor[1] * self.width
-            if self.states[index] != 0:
+            if self.states[index] not in (0, 2):
                 continue
             self.states[index] = 1
             self.revealed_cells += 1
