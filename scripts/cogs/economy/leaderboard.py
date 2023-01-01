@@ -164,8 +164,9 @@ class Leaderboard(commands.Cog):
 
         async with aiosqlite.connect("data\\database.db") as db:
             await db.execute(f"CREATE TABLE IF NOT EXISTS economy_{interaction.guild.id} (id, balance, UNIQUE(id))")
-            cursor = await db.execute(f"SELECT * FROM economy_{interaction.guild.id}")
-            leaderboard_length: int = len(await cursor.fetchall())
+            cursor: aiosqlite.Cursor = await db.execute(f"SELECT * FROM economy_{interaction.guild.id}")
+            leaderboard: typing.List[typing.Tuple[int]] = await cursor.fetchall()
+            leaderboard_length: int = len(leaderboard)
 
         if leaderboard_length == 0:
             await interaction.response.send_message(
