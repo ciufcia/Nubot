@@ -2,10 +2,9 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-import typing
-
 from scripts import nubot
 from scripts.utils import embeds
+
 
 class Help(commands.Cog):
 
@@ -23,15 +22,15 @@ class Help(commands.Cog):
 
         commands_string: str = "```"
 
-        commands = [
+        slash_commands = [
             command for command in self.bot.tree.get_commands()
             if not isinstance(command, discord.app_commands.ContextMenu)
         ]
 
         c: int = 1
-        for command in commands:
+        for command in slash_commands:
             commands_string += command.name
-            if c != len(commands):
+            if c != len(slash_commands):
                 commands_string += "\n"
             c += 1
 
@@ -43,6 +42,7 @@ class Help(commands.Cog):
         )
 
         await interaction.response.send_message(embed=embed)
+
 
 async def setup(bot: nubot.Nubot) -> None:
     await bot.add_cog(Help(bot))
