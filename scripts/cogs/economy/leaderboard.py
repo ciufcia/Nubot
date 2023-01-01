@@ -162,7 +162,7 @@ class Leaderboard(commands.Cog):
 
         place = int(place)
 
-        async with aiosqlite.connect("data\\database.db") as db:
+        async with aiosqlite.connect("data/database.db") as db:
             await db.execute(f"CREATE TABLE IF NOT EXISTS economy_{interaction.guild.id} (id, balance, UNIQUE(id))")
             cursor: aiosqlite.Cursor = await db.execute(f"SELECT * FROM economy_{interaction.guild.id}")
             leaderboard: typing.List[typing.Tuple[int]] = await cursor.fetchall()
