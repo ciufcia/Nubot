@@ -87,10 +87,11 @@ class MinesweeperGame:
 
 
 class DifficultySelectView(discord.ui.View):
-    def __init__(self):
+    def __init__(self, user_id):
         super().__init__(timeout=180.0)
         self.success = False
         self.select_values = []
+        self.user_id = user_id
 
     @discord.ui.select(
         placeholder="Choose the difficulty",
@@ -107,6 +108,11 @@ class DifficultySelectView(discord.ui.View):
         self.select_values = select.values
         self.stop()
 
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if interaction.user.id != self.user_id:
+            await interaction.response.send_message(embed=embeds.cant_interact_with_private_view(), ephemeral=True)
+            return False
+        return True
 
 class InGameView(discord.ui.View):
     def __init__(self, user_id: int):
@@ -145,7 +151,7 @@ class InGameView(discord.ui.View):
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
         if interaction.user.id != self.user_id:
-            await interaction.response.send_message(embed=embeds.cant_interact(), ephemeral=True)
+            await interaction.response.send_message(embed=embeds.cant_interact_with_private_view(), ephemeral=True)
             return False
         return True
 
@@ -163,7 +169,7 @@ class Minesweeper(commands.Cog):
             description="Uncover all of the mine-free cells, to win!\n:o: is your cursor.",
             color=embeds.DEFAULT_EMBED_COLOR
         )
-        view: DifficultySelectView = DifficultySelectView()
+        view: DifficultySelectView = DifficultySelectView(interaction.user.id)
         await interaction.response.send_message(embed=embed, view=view)
         await view.wait()
 

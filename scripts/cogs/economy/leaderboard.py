@@ -135,7 +135,7 @@ class LeaderboardButtons(discord.ui.View):
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
         if interaction.user.id != self.user_id:
-            await interaction.response.send_message(embed=embeds.cant_interact(), ephemeral=True)
+            await interaction.response.send_message(embed=embeds.cant_interact_with_private_view(), ephemeral=True)
             return False
         return True
 
