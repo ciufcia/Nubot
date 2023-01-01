@@ -11,9 +11,9 @@ import datetime
 from scripts import nubot
 from scripts.utils import embeds
 
-_BOARD_WIDTH: int = 5
+_BOARD_WIDTH: int = 9
 _BOARD_HEIGHT: int = 5
-_SNAKE_STARTING_POS_X: int = 2
+_SNAKE_STARTING_POS_X: int = 4
 _SNAKE_STARTING_POS_Y: int = 2
 _SNAKE_UPDATE_DELTA: datetime.timedelta = datetime.timedelta(minutes=5.0)
 
@@ -117,7 +117,7 @@ class SnakeGame:
             if new_head_index in body\
                 or (direction == 0 and new_head_index % _BOARD_WIDTH == 0)\
                 or (direction == 1 and new_head_index >= len(board))\
-                or (direction == 2 and new_head_index % _BOARD_WIDTH == 4)\
+                or (direction == 2 and new_head_index % _BOARD_WIDTH == _BOARD_WIDTH - 1)\
                     or (direction == 3 and new_head_index < 0):
                 await SnakeGame.create()
                 return
@@ -339,7 +339,7 @@ class Snake(commands.Cog):
 
     @app_commands.command(name="snake")
     async def snake(self, interaction: discord.Interaction) -> None:
-
+        """Play snake with other people globally"""
         async with aiosqlite.connect("data/database.db") as db:
             db.row_factory = aiosqlite.Row
 

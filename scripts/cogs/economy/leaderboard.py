@@ -54,8 +54,8 @@ async def get_leaderboard_section(
     embed.set_footer(
         text=
         f"""
-        {math.ceil(place / _LEADERBOARD_SECTION_SIZE)} /
-        {math.ceil(leaderboard_length / _LEADERBOARD_SECTION_SIZE)}
+{math.ceil(place / _LEADERBOARD_SECTION_SIZE)} / \
+{math.ceil(leaderboard_length / _LEADERBOARD_SECTION_SIZE)}
         """
     )
 

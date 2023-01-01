@@ -153,6 +153,7 @@ class Minesweeper(commands.Cog):
 
     @app_commands.command(name="minesweeper")
     async def minesweeper(self, interaction: discord.Interaction) -> None:
+        """Play classic minesweeper"""
         embed: discord.Embed = discord.Embed(
             title=":triangular_flag_on_post: Minesweeper :bomb:",
             description="Uncover all of the mine-free cells, to win!\n:o: is your cursor.",

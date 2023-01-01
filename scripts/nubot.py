@@ -1,5 +1,7 @@
+import asyncio
+
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 import os
 import typing
@@ -21,7 +23,7 @@ async def _change_filepath_to_python_path(path: str) -> str:
 class Nubot(commands.Bot):
 
     def __init__(self) -> None:
-        super().__init__(intents=discord.Intents.all(), command_prefix="0")
+        super().__init__(intents=discord.Intents.all(), command_prefix="0", help_command=None)
         self.__COG_DIR_NAME: str = "scripts/cogs"
         self.__COG_DIR: str = "scripts.cogs"
 
@@ -32,14 +34,28 @@ class Nubot(commands.Bot):
             cog_paths[i] = await _change_filepath_to_python_path(cog_paths[i])
 
         for cog in cog_paths:
-            print(f"Loading cog: `{cog}`", end=" ")
+            print(f"-> Loading cog: `{cog}`", end=" ")
             await self.load_extension(cog)
             print("Finished")
 
     async def setup_hook(self) -> None:
         print("Starting setup_hook...")
         await self.add_cogs()
-        print("Starting snake...", end=" ")
+        print("-> Starting snake...", end=" ")
         self.get_cog("Snake").move.start()
         print("Finished")
-        print("Finishing setup_hook...")
+        self.sync_commands.start()
+        print("Finished setup_hook")
+
+    @tasks.loop(minutes=1.0, count=1)
+    async def sync_commands(self) -> None:
+        print("Starting syncing task...")
+        print("-> Waiting for the bot to log in...")
+        await self.wait_until_ready()
+        guild: discord.Guild
+        for guild in self.guilds:
+            print(f"-> Syncing application commands for guild with ID: {guild.id}", end=" ")
+            self.tree.copy_global_to(guild=guild)
+            print("Finished")
+        await self.tree.sync()
+        print("Finished syncing task")
