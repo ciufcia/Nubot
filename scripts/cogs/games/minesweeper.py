@@ -174,6 +174,7 @@ class Minesweeper(commands.Cog):
         await view.wait()
 
         if not view.success:
+            await interaction.edit_original_response(view=None)
             return
 
         difficulty: str = view.select_values[0]
@@ -199,13 +200,12 @@ class Minesweeper(commands.Cog):
             view=in_game_view
         )
 
-        won: bool = False
-
         while True:
             await in_game_view.wait()
 
             match in_game_view.pressed_button:
                 case "nothing":
+                    await interaction.edit_original_response(view=None)
                     return
                 case "mine":
                     game_state: int = game.update(cursor_position)
