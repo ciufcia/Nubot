@@ -274,7 +274,7 @@ class InGameView(discord.ui.View):
             await self.already_voted(interaction)
             return
 
-        if self.current_direction == 1:
+        if self.current_direction == 3:
             await self.wrong_direction(interaction)
             return
 
