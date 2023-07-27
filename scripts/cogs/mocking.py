@@ -64,7 +64,7 @@ class Mocking(commands.Cog):
 
         if not is_already_mocked:
             embed: discord.Embed = discord.Embed(
-                title=f"Began mocking **{member.name}#{member.discriminator}**!",
+                title=f"Began mocking **{member.name}**!",
                 color=embeds.DEFAULT_EMBED_COLOR
             )
             embed.set_thumbnail(url=member.avatar.url)
@@ -72,7 +72,7 @@ class Mocking(commands.Cog):
         else:
             await interaction.response.send_message(
                 embed=embeds.simple_error_embed(
-                    f"Member **{member.name}#{member.discriminator}** is already being mocked!"
+                    f"Member **{member.name}** is already being mocked!"
                 ),
                 ephemeral=True
             )
@@ -103,7 +103,7 @@ class Mocking(commands.Cog):
 
         if is_already_mocked:
             embed: discord.Embed = discord.Embed(
-                title=f"Stopped mocking **{member.name}#{member.discriminator}**!",
+                title=f"Stopped mocking **{member.name}**!",
                 color=embeds.DEFAULT_EMBED_COLOR
             )
             embed.set_thumbnail(url=member.avatar.url)
@@ -111,7 +111,7 @@ class Mocking(commands.Cog):
         else:
             await interaction.response.send_message(
                 embed=embeds.simple_error_embed(
-                    f"Member **{member.name}#{member.discriminator}** wasn\'t being mocked in the first place!"
+                    f"Member **{member.name}** wasn\'t being mocked in the first place!"
                 ),
                 ephemeral=True
             )

@@ -45,7 +45,7 @@ async def get_leaderboard_section(
     for row in data:
         user: discord.User = bot.get_user(row["id"])
         embed.add_field(
-            name=f"**{c}. {user.name}#{user.discriminator}**",
+            name=f"**{c}. {user.name}**",
             value=f":coin: **{row['balance']}**",
             inline=False
         )

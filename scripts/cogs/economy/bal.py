@@ -27,7 +27,7 @@ class Bal(commands.Cog):
         money: int = await economy_helpers.get_balance(member.id, interaction.guild.id)
 
         embed: discord.Embed = discord.Embed(
-            title=f"**{member.name}#{member.discriminator}\'s** balance:",
+            title=f"**{member.name}\'s** balance:",
             description=f":coin: **{money}**",
             color=embeds.DEFAULT_EMBED_COLOR
         )
